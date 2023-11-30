@@ -61,7 +61,7 @@ class CSVJoin:
 
                 # print(self.names)
                 # break
-            break
+            # break
 
     def set_default_options(self):
         '''

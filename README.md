@@ -6,7 +6,7 @@ Install Python 3
 
 ## 1.1 Get the code
 
-Clone this repository or [download the ZIP file](https://github.com/kingsdigitallab/tabmatch/archive/refs/heads/main.zip)
+Clone this repository or [download the ZIP file](https://github.com/kingsdigitallab/tabmatch/archive/refs/heads/main.zip) and unzip it.
 
 ## 1.2 Set up the python environment
 
@@ -50,5 +50,11 @@ Columns:
 * **table**: the name of the input file the name was found
 * **row_index**: the index of the row the name was found
 
+# 4. Format of the input files
 
+The input files are ODS (.ods) workbooks. Only the first spreadsheet in each file is read by the tool. Others are ignored.
+
+Each spreadsheet must have the following columns:
+* The standardised name: 'FIRST NAME (STANDARDISE)', 'LAST NAME (STANDARDISE)', 'FATHER’S NAME (STANDARDISE)'
+* The transcribed name: 'FIRST NAME', 'LAST NAME', 'FATHER’S NAME'
 
