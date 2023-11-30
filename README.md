@@ -50,6 +50,9 @@ Columns:
 * **table**: the name of the input file the name was found
 * **row_index**: the index of the row the name was found
 
+![image](https://github.com/kingsdigitallab/tabmatch/assets/3778106/3069cd5e-fabd-47a8-82d5-2f956d063220)
+
+
 # 4. Format of the input files
 
 The input files are ODS (.ods) workbooks. Only the first spreadsheet in each file is read by the tool. Others are ignored.
