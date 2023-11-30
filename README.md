@@ -1,2 +1,54 @@
-# tabmatch
-Tool to match rows across multiple tables based on a set of columns.
+A simple tool to match rows across multiple tables based on a set of columns.
+
+# 1. Installation
+
+Install Python 3 
+
+## 1.1 Get the code
+
+Clone this repository or [download the ZIP file](https://github.com/kingsdigitallab/tabmatch/archive/refs/heads/main.zip)
+
+## 1.2 Set up the python environment
+
+Go in the terminal/console and change to the tabmatch folder.
+
+### 1.3 Create the virtual environment
+
+`python -m venv venv`
+
+### 1.4 Activate the environment:
+
+On Windows:
+`venv\Scripts\activate`
+
+On other systems:
+`source venv/bin/activate`
+
+### 1.5 Install packages
+
+`pip install -f requirements.txt`
+
+# 2. Usage
+
+* Copy your input files (in ODS format, .ods) anywhere under the data/in folder.
+* Go to the terminal/console and change into the `tabmatch` folder.
+* Activate the environment (See 1.4 above).
+* Run the script to list rows with the same names among your input files.
+
+`python tabmatch > matches.csv`
+
+* open `matches.csv` with your spreadsheet editor (e.g. Excel).
+
+# 3. Format of the output file
+
+The output file is a CSV with one row per occurrence of a name in one of the input tables.
+
+For instance if John Smith appears twice in file1.ods and once in file2.ods, the output file will contain three successive rows.
+
+Columns:
+* **normalised_name**: the normalised name 
+* **table**: the name of the input file the name was found
+* **row_index**: the index of the row the name was found
+
+
+
