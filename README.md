@@ -52,6 +52,9 @@ Columns:
 
 ![image](https://github.com/kingsdigitallab/tabmatch/assets/3778106/3069cd5e-fabd-47a8-82d5-2f956d063220)
 
+In that screenshot:
+* Andrea Allegro appears on row 8 and 40 of table 2.2.2.
+* Bartolomeo Gaibisso appears in 4 different tables.
 
 # 4. Format of the input files
 
