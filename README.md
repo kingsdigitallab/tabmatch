@@ -26,7 +26,7 @@ On other systems:
 
 ### 1.5 Install packages
 
-`pip install -f requirements.txt`
+`pip install -r requirements.txt`
 
 # 2. Usage
 
@@ -35,7 +35,7 @@ On other systems:
 * Activate the environment (See 1.4 above).
 * Run the script to list rows with the same names among your input files.
 
-`python tabmatch > matches.csv`
+`python tabmatch.py > matches.csv`
 
 * open `matches.csv` with your spreadsheet editor (e.g. Excel).
 

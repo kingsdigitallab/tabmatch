@@ -1,9 +1,8 @@
-# This is a sample Python script.
-
-# Press Ctrl+F5 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 import glob
 import re
+import csv
+import sys
+from pyexcel_odsr import get_data
 
 
 class CSVJoin:
@@ -17,25 +16,31 @@ class CSVJoin:
     def run(self):
         for ods_path in glob.glob("**/*.ods", recursive=True):
             self.process_ods(ods_path)
-            break
+            # break
 
-        import csv
-        import sys
+        self.write_output()
+
+    def write_output(self):
         # with open('matched.csv', 'w', newline='') as csvfile:
-        if 1:
-            writer = csv.writer(sys.stdout, quoting=csv.QUOTE_MINIMAL)
-            for name, rows in self.names.items():
-                if len(rows) > 1:
-                    for row in rows:
-                        writer.writerow([
-                            name,
-                            row['table'],
-                            row['row_index']
-                        ])
+        writer = csv.writer(sys.stdout, quoting=csv.QUOTE_MINIMAL)
+
+        writer.writerow([
+            'normalised_name',
+            'table',
+            'row_index',
+        ])
+
+        for name, rows in self.names.items():
+            if len(rows) > 1:
+                for row in rows:
+                    writer.writerow([
+                        name,
+                        row['table'],
+                        row['row_index']
+                    ])
 
     def process_ods(self, ods_path):
         # print(ods_path)
-        from pyexcel_odsr import get_data
 
         table_name = ods_path
         # remove path & extension
@@ -61,7 +66,8 @@ class CSVJoin:
 
                 # print(self.names)
                 # break
-            # break
+            # break, we don't read other sheets
+            break
 
     def set_default_options(self):
         '''
@@ -73,7 +79,6 @@ class CSVJoin:
             'match': ['FIRST NAME (STANDARDISE)', 'LAST NAME (STANDARDISE)', 'FATHER’S NAME (STANDARDISE)'],
         }
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     csvjoin = CSVJoin()
     csvjoin.run()
