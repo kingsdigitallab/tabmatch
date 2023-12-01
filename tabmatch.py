@@ -5,6 +5,16 @@ import sys
 from pyexcel_odsr import get_data
 
 
+DEFAULT_OPTIONS = {
+    # the index (1-based) of the row which contains the column names
+    'headers': 2,
+    # the list of column names used to match rows
+    'match': ['FIRST NAME (STANDARDISE)', 'LAST NAME (STANDARDISE)', 'FATHER’S NAME (STANDARDISE)'],
+    # the list of column names returned in the output
+    'return': ['ORDER NUMBER', 'FIRST NAME', 'LAST NAME', 'FATHER’S NAME', 'YEAR', 'PLACE'],
+}
+
+
 class CSVJoin:
 
     def __init__(self, options=None):
@@ -16,7 +26,6 @@ class CSVJoin:
     def run(self):
         for ods_path in glob.glob("**/*.ods", recursive=True):
             self.process_ods(ods_path)
-            # break
 
         self.write_output()
 
@@ -28,7 +37,7 @@ class CSVJoin:
             'normalised_name',
             'table',
             'row_index',
-        ])
+        ] + self.options['return'])
 
         for name, rows in self.names.items():
             if len(rows) > 1:
@@ -37,6 +46,9 @@ class CSVJoin:
                         name,
                         row['table'],
                         row['row_index']
+                    ] + [
+                        row['data'].get(k, '')
+                        for k in self.options['return']
                     ])
 
     def process_ods(self, ods_path):
@@ -51,33 +63,33 @@ class CSVJoin:
         sheets = get_data(ods_path)
         for rows in sheets.values():
             headers = rows[self.options['headers'] - 1]
-            match_col_indexes = [headers.index(header) for header in self.options['match']]
+
             for row_idx in range(self.options['headers'], len(rows)):
                 row = rows[row_idx]
-                if len(row) < 2: continue
-                key = ' '.join([row[i] for i in match_col_indexes])
+                if len(row) < 2:
+                    continue
+
+                row_dict = dict(zip(headers, row + ([''] * (len(headers) - len(row)))))
+
+                key = ' '.join([
+                    row_dict.get(header, '').lower().strip()
+                    for header in self.options['match']
+                ])
 
                 if key not in self.names:
                     self.names[key] = []
                 self.names[key].append({
                     'table': table_name,
-                    'row_index': row_idx + 1
+                    'row_index': row_idx + 1,
+                    'data': row_dict
                 })
 
-                # print(self.names)
-                # break
             # break, we don't read other sheets
             break
 
     def set_default_options(self):
-        '''
-        ['ORDER NUMBER', 'FIRST NAME', 'LAST NAME', 'FATHER’S NAME', 'FIRST NAME (STANDARDISE)', 'LAST NAME (STANDARDISE)', 'FATHER’S NAME (STANDARDISE)'
-        :return:
-        '''
-        self.options = {
-            'headers': 2, # 1-based index
-            'match': ['FIRST NAME (STANDARDISE)', 'LAST NAME (STANDARDISE)', 'FATHER’S NAME (STANDARDISE)'],
-        }
+        self.options = DEFAULT_OPTIONS
+
 
 if __name__ == '__main__':
     csvjoin = CSVJoin()
