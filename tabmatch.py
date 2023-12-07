@@ -9,7 +9,8 @@ DEFAULT_OPTIONS = {
     # the index (1-based) of the row which contains the column names
     'headers': 2,
     # the list of column names used to match rows
-    'match': ['FIRST NAME (STANDARDISE)', 'LAST NAME (STANDARDISE)', 'FATHER’S NAME (STANDARDISE)'],
+    # 'match': ['FIRST NAME (STANDARDISE)', 'LAST NAME (STANDARDISE)', 'FATHER’S NAME (STANDARDISE)'],
+    'match': ['FIRST NAME (STANDARDISE)', 'LAST NAME (STANDARDISE)'],
     # the list of column names returned in the output
     'return': ['ORDER NUMBER', 'FIRST NAME', 'LAST NAME', 'FATHER’S NAME', 'YEAR', 'PLACE'],
 }
@@ -31,7 +32,7 @@ class CSVJoin:
 
     def write_output(self):
         # with open('matched.csv', 'w', newline='') as csvfile:
-        writer = csv.writer(sys.stdout, quoting=csv.QUOTE_MINIMAL)
+        writer = csv.writer(sys.stdout, dialect='excel-tab')
 
         writer.writerow([
             'normalised_name',
