@@ -10,9 +10,11 @@ DEFAULT_OPTIONS = {
     'headers': 2,
     # the list of column names used to match rows
     # 'match': ['FIRST NAME (STANDARDISE)', 'LAST NAME (STANDARDISE)', 'FATHER’S NAME (STANDARDISE)'],
-    'match': ['FIRST NAME (STANDARDISE)', 'LAST NAME (STANDARDISE)'],
+    'match': ['LAST NAME (STANDARDISE)', 'FIRST NAME (STANDARDISE)'],
     # the list of column names returned in the output
-    'return': ['ORDER NUMBER', 'FIRST NAME', 'LAST NAME', 'FATHER’S NAME', 'YEAR', 'PLACE'],
+    'return': ['ORDER NUMBER', 'LAST NAME', 'FIRST NAME', 'FATHER’S NAME', 'YEAR', 'PLACE'],
+    # the list of columns the rows will be sorted by in the output
+    'sort': ['FATHER’S NAME (STANDARDISE)', 'table', 'row_index']
 }
 
 
@@ -40,8 +42,14 @@ class CSVJoin:
             'row_index',
         ] + self.options['return'])
 
-        for name, rows in self.names.items():
+        names = sorted(self.names.keys())
+        for name in names:
+            rows = self.names[name]
             if len(rows) > 1:
+                rows = sorted(
+                    rows,
+                    key=lambda r: [r['data'].get(k, r.get(k, '')) for k in self.options['sort']]
+                )
                 for row in rows:
                     writer.writerow([
                         name,
