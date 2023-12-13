@@ -12,7 +12,7 @@ DEFAULT_OPTIONS = {
     # 'match': ['FIRST NAME (STANDARDISE)', 'LAST NAME (STANDARDISE)', 'FATHER’S NAME (STANDARDISE)'],
     'match': ['LAST NAME (STANDARDISE)', 'FIRST NAME (STANDARDISE)'],
     # the list of column names returned in the output
-    'return': ['ORDER NUMBER', 'LAST NAME', 'FIRST NAME', 'FATHER’S NAME', 'YEAR', 'PLACE'],
+    'return': ['ORDER NUMBER', 'LAST NAME', 'FIRST NAME', 'FATHER’S NAME', 'DATE', 'PLACE'],
     # the list of columns the rows will be sorted by in the output
     'sort': ['FATHER’S NAME (STANDARDISE)', 'table', 'row_index']
 }
