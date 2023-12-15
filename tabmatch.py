@@ -34,7 +34,7 @@ class CSVJoin:
 
     def write_output(self):
         # with open('matched.csv', 'w', newline='') as csvfile:
-        writer = csv.writer(sys.stdout, dialect='excel-tab')
+        writer = csv.writer(sys.stdout, dialect='excel-tab', lineterminator='\n')
 
         writer.writerow([
             'normalised_name',
